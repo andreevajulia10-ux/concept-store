@@ -53,28 +53,28 @@ export type Product = {
 const defaultGallery: GalleryItem[] = [
   {
     figure: "Fig. 1",
-    image: "/assets/aster-interior-01.png",
+    image: "/assets/aster-interior-01.webp",
     caption: "Aster Chandelier\n6 Arm / Aged Brass\nAlabaster Glass",
     w: 674,
     h: 859,
   },
   {
     figure: "Fig. 2",
-    image: "/assets/aster-interior-02.png",
+    image: "/assets/aster-interior-02.webp",
     caption: "Aster Chandelier\nAlabaster Glass\nAged Brass",
     w: 435,
     h: 554,
   },
   {
     figure: "Fig. 3",
-    image: "/assets/aster-interior-03.png",
+    image: "/assets/aster-interior-03.webp",
     caption: "Aster Chandelier\n6 Arm / Aged Brass\nAlabaster Glass",
     w: 435,
     h: 554,
   },
   {
     figure: "Fig. 4",
-    image: "/assets/aster-interior-04.png",
+    image: "/assets/aster-interior-04.webp",
     caption: "Aster Chandelier\nAlabaster Glass Detail\nAged Brass",
     w: 674,
     h: 859,
@@ -97,19 +97,19 @@ const defaultBannerText =
   "Inspired by the quiet rhythm of stems and petals, Aster balances sculptural brass arms with softly formed alabaster glass. The irregular shapes create subtle variation from piece to piece, giving each chandelier its own character.";
 
 const defaultShadeFinishes: Finishes = [
-  { label: "Alabaster", image: "/assets/finish-glass-1.png" },
-  { label: "Pistachio", image: "/assets/finish-glass-2.png" },
-  { label: "Frosted Opal", image: "/assets/finish-glass-2.png" },
-  { label: "Smoke", image: "/assets/finish-glass-3.png" },
-  { label: "Warm Amber", image: "/assets/finish-glass-4.png" },
+  { label: "Alabaster", image: "/assets/finish-glass-1.webp" },
+  { label: "Pistachio", image: "/assets/finish-glass-2.webp" },
+  { label: "Frosted Opal", image: "/assets/finish-glass-2.webp" },
+  { label: "Smoke", image: "/assets/finish-glass-3.webp" },
+  { label: "Warm Amber", image: "/assets/finish-glass-4.webp" },
 ];
 
 const defaultMetalFinishes: Finishes = [
-  { label: "Aged Brass", image: "/assets/finish-brass-1.png" },
-  { label: "Brushed Brass", image: "/assets/finish-brass-2.png" },
-  { label: "Dark Bronze", image: "/assets/finish-brass-3.png" },
-  { label: "Blackened Brass", image: "/assets/finish-brass-4.png" },
-  { label: "All", image: "/assets/finish-brass-5.png" },
+  { label: "Aged Brass", image: "/assets/finish-brass-1.webp" },
+  { label: "Brushed Brass", image: "/assets/finish-brass-2.webp" },
+  { label: "Dark Bronze", image: "/assets/finish-brass-3.webp" },
+  { label: "Blackened Brass", image: "/assets/finish-brass-4.webp" },
+  { label: "All", image: "/assets/finish-brass-5.webp" },
 ];
 
 /* ====== Галерея товара из его собственных фото ====== */
@@ -120,7 +120,7 @@ const gallerySizes: { w: number; h: number }[] = [
   { w: 674, h: 859 },
 ];
 
-function pngSize(
+function imageSize(
   publicRoot: string,
   rel: string,
 ): { w: number; h: number } | null {
@@ -128,9 +128,43 @@ function pngSize(
   if (!existsSync(p)) return null;
   try {
     const b = readFileSync(p);
-    // PNG-заголовок: signature + ширина(16–19) + высота(20–23).
+    // PNG: signature + width (16–19) + height (20–23).
     if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) {
       return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+    }
+
+    if (
+      b.length >= 30 &&
+      b.toString("ascii", 0, 4) === "RIFF" &&
+      b.toString("ascii", 8, 12) === "WEBP"
+    ) {
+      const chunk = b.toString("ascii", 12, 16);
+
+      if (chunk === "VP8X") {
+        const w = 1 + b[24] + (b[25] << 8) + (b[26] << 16);
+        const h = 1 + b[27] + (b[28] << 8) + (b[29] << 16);
+        return { w, h };
+      }
+
+      if (chunk === "VP8L" && b[20] === 0x2f) {
+        const bits = b.readUInt32LE(21);
+        return {
+          w: 1 + (bits & 0x3fff),
+          h: 1 + ((bits >>> 14) & 0x3fff),
+        };
+      }
+
+      if (
+        chunk === "VP8 " &&
+        b[23] === 0x9d &&
+        b[24] === 0x01 &&
+        b[25] === 0x2a
+      ) {
+        return {
+          w: b.readUInt16LE(26) & 0x3fff,
+          h: b.readUInt16LE(28) & 0x3fff,
+        };
+      }
     }
   } catch {
     /* ignore */
@@ -141,21 +175,21 @@ function pngSize(
 // Есть ли в серии хоть один снимок «(N)» (номер может начинаться не с 1).
 function seriesExists(publicRoot: string, base: string): boolean {
   for (let n = 1; n <= 9; n++) {
-    if (existsSync(path.join(publicRoot, `${base} (${n}).png`))) return true;
+    if (existsSync(path.join(publicRoot, `${base} (${n}).webp`))) return true;
   }
   return false;
 }
 
 function buildProductGallery(name: string, heroImage: string): GalleryItem[] {
-  // heroImage вида /products/slug.png → базовый путь без расширения
+  // heroImage вида /products/slug.webp → базовый путь без расширения
   const base = heroImage.replace(/\.[a-z0-9]+$/i, "");
   const publicRoot = path.join(process.cwd(), "public");
   const relBase = base.replace(/^\//, "");
 
   const rels: string[] = [];
 
-  // Файлы серии могут лежать по красивому имени («Halo Chandelier (1).png»)
-  // или по slug-имени («estelle-chandelier (1).png»).
+  // Файлы серии могут лежать по красивому имени («Halo Chandelier (1).webp»)
+  // или по slug-имени («estelle-chandelier (1).webp»).
   const prettyRel = `products/${name}`;
   const seriesBase = seriesExists(publicRoot, prettyRel)
     ? prettyRel
@@ -168,12 +202,12 @@ function buildProductGallery(name: string, heroImage: string): GalleryItem[] {
     // большую карточку-баннер и в галерею не попадает.
     const nums: number[] = [];
     for (let n = 1; n <= 9; n++) {
-      if (existsSync(path.join(publicRoot, `${seriesBase} (${n}).png`))) {
+      if (existsSync(path.join(publicRoot, `${seriesBase} (${n}).webp`))) {
         nums.push(n);
       }
     }
     const verticals = nums.filter((n) => {
-      const s = pngSize(publicRoot, `${seriesBase} (${n}).png`);
+      const s = imageSize(publicRoot, `${seriesBase} (${n}).webp`);
       return !(s && s.w > s.h);
     });
     // Приоритет: снимки (4) и (5) первыми (Fig.1 и Fig.2),
@@ -182,10 +216,10 @@ function buildProductGallery(name: string, heroImage: string): GalleryItem[] {
       ...verticals.filter((n) => n === 4 || n === 5).sort((a, b) => a - b),
       ...verticals.filter((n) => n !== 4 && n !== 5).sort((a, b) => a - b),
     ];
-    for (const n of ordered) rels.push(`${seriesBase} (${n}).png`);
+    for (const n of ordered) rels.push(`${seriesBase} (${n}).webp`);
   } else {
     ["", "-2", "-3", "-4"].forEach((suffix, i) => {
-      rels.push(i === 0 ? `${relBase}.png` : `${relBase}${suffix}.png`);
+      rels.push(i === 0 ? `${relBase}.webp` : `${relBase}${suffix}.webp`);
     });
   }
 
@@ -196,7 +230,7 @@ function buildProductGallery(name: string, heroImage: string): GalleryItem[] {
   let vIdx = 0;
 
   rels.forEach((rel) => {
-    const size = pngSize(publicRoot, rel);
+    const size = imageSize(publicRoot, rel);
     const fig = items.length + 1;
     if (size && size.w > size.h) {
       items.push({
@@ -279,7 +313,7 @@ function buildProduct(params: {
     replacementImage: heroImage,
     bulbName: "G9 LED Bulb — Warm Dim, 4W",
     bulbPrice: "$18 each",
-    bulbImage: "/assets/finish-bulb.png",
+    bulbImage: "/assets/finish-bulb.webp",
   };
 }
 
@@ -305,22 +339,22 @@ export const products: Product[] = [
     defaultShade: "Shade → Alabaster Glass",
     sizeOptions: ["110 × 72 cm", "100 × 62 cm", "90 × 55 cm"],
     defaultSize: "110 × 72 cm",
-    heroImage: "/assets/aster-hero.png",
+    heroImage: "/assets/aster-hero.webp",
     finishTitle: "Aged Brass",
     gallery: defaultGallery,
     techSpecs: defaultTechSpecs,
     downloads: defaultDownloads,
-    bannerImage: "/assets/aster-banner.png",
+    bannerImage: "/assets/aster-banner.webp",
     bannerText: defaultBannerText,
     shadeFinishes: defaultShadeFinishes,
     metalFinishes: defaultMetalFinishes,
     replacementName: "Aster Replacement Shade",
     replacementDesc: "Hand-finished alabaster glass",
     replacementPrice: "$320 each",
-    replacementImage: "/assets/aster-replacement-shade.png",
+    replacementImage: "/assets/aster-replacement-shade.webp",
     bulbName: "G9 LED Bulb — Warm Dim, 4W",
     bulbPrice: "$18 each",
-    bulbImage: "/assets/finish-bulb.png",
+    bulbImage: "/assets/finish-bulb.webp",
   },
   {
     slug: "arc-glass-sconce",
@@ -340,22 +374,22 @@ export const products: Product[] = [
     defaultShade: "Glass → Frosted Opal",
     sizeOptions: ["One size", "Extended cord"],
     defaultSize: "One size",
-    heroImage: "/assets/featured-arc-main.png",
+    heroImage: "/assets/featured-arc-main.webp",
     finishTitle: "Brushed Brass",
     gallery: defaultGallery,
     techSpecs: defaultTechSpecs,
     downloads: defaultDownloads,
-    bannerImage: "/assets/aster-banner.png",
+    bannerImage: "/assets/aster-banner.webp",
     bannerText: defaultBannerText,
     shadeFinishes: defaultShadeFinishes,
     metalFinishes: defaultMetalFinishes,
     replacementName: "Arc Replacement Glass",
     replacementDesc: "Hand-blown glass shade",
     replacementPrice: "$180 each",
-    replacementImage: "/assets/aster-replacement-shade.png",
+    replacementImage: "/assets/aster-replacement-shade.webp",
     bulbName: "G9 LED Bulb — Warm Dim, 4W",
     bulbPrice: "$18 each",
-    bulbImage: "/assets/finish-bulb.png",
+    bulbImage: "/assets/finish-bulb.webp",
   },
   {
     slug: "orbis-wall-light",
@@ -375,30 +409,30 @@ export const products: Product[] = [
     defaultShade: "Glass → Opal",
     sizeOptions: ["Standard", "Reduced"],
     defaultSize: "Standard",
-    heroImage: "/assets/featured-orbis-main.png",
+    heroImage: "/assets/featured-orbis-main.webp",
     finishTitle: "Brushed Brass",
     gallery: defaultGallery,
     techSpecs: defaultTechSpecs,
     downloads: defaultDownloads,
-    bannerImage: "/assets/aster-banner.png",
+    bannerImage: "/assets/aster-banner.webp",
     bannerText: defaultBannerText,
     shadeFinishes: defaultShadeFinishes,
     metalFinishes: defaultMetalFinishes,
     replacementName: "Orbis Replacement Glass",
     replacementDesc: "Hand-finished glass shade",
     replacementPrice: "$160 each",
-    replacementImage: "/assets/aster-replacement-shade.png",
+    replacementImage: "/assets/aster-replacement-shade.webp",
     bulbName: "G9 LED Bulb — Warm Dim, 4W",
     bulbPrice: "$18 each",
-    bulbImage: "/assets/finish-bulb.png",
+    bulbImage: "/assets/finish-bulb.webp",
   },
   buildProduct({
     slug: "orbis-chandelier",
     name: "Orbis Chandelier",
 
     price: "From $1,795",
-    heroImage: "/products/orbis-chandelier.png",
-    bannerImage: "/products/Orbis Chandelier (2).png",
+    heroImage: "/products/orbis-chandelier.webp",
+    bannerImage: "/products/Orbis Chandelier (2).webp",
     itemSeed: "410055",
     leadWeeks: 12,
     finishName: "Aged Brass",
@@ -409,8 +443,8 @@ export const products: Product[] = [
     slug: "estelle-chandelier",
     name: "Estelle Chandelier",
     price: "From $1,995",
-    heroImage: "/products/estelle-chandelier.png",
-    bannerImage: "/products/estelle-chandelier (2).png",
+    heroImage: "/products/estelle-chandelier.webp",
+    bannerImage: "/products/estelle-chandelier (2).webp",
     itemSeed: "410056",
     leadWeeks: 12,
     finishName: "Brushed Brass",
@@ -421,8 +455,8 @@ export const products: Product[] = [
     slug: "solstice-chandelier",
     name: "Solstice Chandelier",
     price: "From $2,395",
-    heroImage: "/products/solstice-chandelier.png",
-    bannerImage: "/products/solstice-chandelier (3).png",
+    heroImage: "/products/solstice-chandelier.webp",
+    bannerImage: "/products/solstice-chandelier (3).webp",
     itemSeed: "410057",
     leadWeeks: 12,
     finishName: "Blackened Brass",
@@ -434,8 +468,8 @@ export const products: Product[] = [
 
     name: "Halo Chandelier",
     price: "From $1,595",
-    heroImage: "/products/halo-chandelier.png",
-    bannerImage: "/products/Halo Chandelier (2).png",
+    heroImage: "/products/halo-chandelier.webp",
+    bannerImage: "/products/Halo Chandelier (2).webp",
     itemSeed: "410058",
     leadWeeks: 12,
     finishName: "Aged Brass",
@@ -447,7 +481,7 @@ export const products: Product[] = [
     name: "Aurelia Pendant",
 
     price: "From $345",
-    heroImage: "/products/aurelia-pendant.png",
+    heroImage: "/products/aurelia-pendant.webp",
     itemSeed: "410059",
     leadWeeks: 8,
     finishName: "Aged Brass",
@@ -458,8 +492,8 @@ export const products: Product[] = [
     slug: "lumen-pendant",
     name: "Lumen Pendant",
     price: "From $295",
-    heroImage: "/products/lumen-pendant.png",
-    bannerImage: "/products/Lumen Pendant (2).png",
+    heroImage: "/products/lumen-pendant.webp",
+    bannerImage: "/products/Lumen Pendant (2).webp",
     itemSeed: "410060",
     leadWeeks: 8,
     finishName: "Brushed Brass",
@@ -470,7 +504,7 @@ export const products: Product[] = [
     slug: "halo-pendant",
     name: "Halo Pendant",
     price: "From $425",
-    heroImage: "/products/halo-pendant.png",
+    heroImage: "/products/halo-pendant.webp",
     itemSeed: "410061",
     leadWeeks: 10,
     finishName: "Dark Bronze",
@@ -481,8 +515,8 @@ export const products: Product[] = [
     slug: "aster-table-lamp",
     name: "Aster Table Lamp",
     price: "From $265",
-    heroImage: "/products/aster-table-lamp.png",
-    bannerImage: "/products/Aster Table Lamp (2).png",
+    heroImage: "/products/aster-table-lamp.webp",
+    bannerImage: "/products/Aster Table Lamp (2).webp",
     itemSeed: "410062",
     leadWeeks: 8,
     finishName: "Brushed Brass",
@@ -493,8 +527,8 @@ export const products: Product[] = [
     slug: "lumen-table-lamp",
     name: "Lumen Table Lamp",
     price: "From $215",
-    heroImage: "/products/lumen-table-lamp.png",
-    bannerImage: "/products/Lumen Table Lamp (2).png",
+    heroImage: "/products/lumen-table-lamp.webp",
+    bannerImage: "/products/Lumen Table Lamp (2).webp",
     itemSeed: "410063",
     leadWeeks: 6,
     finishName: "Aged Brass",
@@ -505,8 +539,8 @@ export const products: Product[] = [
     slug: "axis-linear-pendant",
     name: "Axis Linear Pendant",
     price: "From $465",
-    heroImage: "/products/axis-linear-pendant.png",
-    bannerImage: "/products/Axis Linear Pendant (2).png",
+    heroImage: "/products/axis-linear-pendant.webp",
+    bannerImage: "/products/Axis Linear Pendant (2).webp",
     itemSeed: "410064",
     leadWeeks: 8,
     finishName: "Dark Bronze",
@@ -517,8 +551,8 @@ export const products: Product[] = [
     slug: "orbis-floor-lamp",
     name: "Orbis Floor Lamp",
     price: "From $545",
-    heroImage: "/products/orbis-floor-lamp.png",
-    bannerImage: "/products/Orbis Floor Lamp (2).png",
+    heroImage: "/products/orbis-floor-lamp.webp",
+    bannerImage: "/products/Orbis Floor Lamp (2).webp",
     itemSeed: "410065",
     leadWeeks: 10,
     finishName: "Brushed Brass",
@@ -529,8 +563,8 @@ export const products: Product[] = [
     slug: "arc-floor-lamp",
     name: "Arc Floor Lamp",
     price: "From $585",
-    heroImage: "/products/floor-lamp.png",
-    bannerImage: "/products/floor-lamp (2).png",
+    heroImage: "/products/floor-lamp.webp",
+    bannerImage: "/products/floor-lamp (2).webp",
     itemSeed: "410066",
     leadWeeks: 10,
     finishName: "Brushed Brass",
@@ -541,8 +575,8 @@ export const products: Product[] = [
     slug: "ember-drop-pendant",
     name: "Ember Drop Pendant",
     price: "From $365",
-    heroImage: "/products/ember-drop-pendant.png",
-    bannerImage: "/products/Ember Drop Pendant (2).png",
+    heroImage: "/products/ember-drop-pendant.webp",
+    bannerImage: "/products/Ember Drop Pendant (2).webp",
     itemSeed: "410067",
     leadWeeks: 8,
     finishName: "Blackened Brass",
@@ -554,8 +588,8 @@ export const products: Product[] = [
     name: "Orbis Table Lamp",
 
     price: "From $245",
-    heroImage: "/products/orbis-table-lamp.png",
-    bannerImage: "/products/Orbis Table Lamp (2).png",
+    heroImage: "/products/orbis-table-lamp.webp",
+    bannerImage: "/products/Orbis Table Lamp (2).webp",
     itemSeed: "410068",
     leadWeeks: 6,
     finishName: "Brushed Brass",
@@ -567,8 +601,8 @@ export const products: Product[] = [
 
     name: "Orbis Wall Sconce",
     price: "From $185",
-    heroImage: "/products/orbis-wall-sconce.png",
-    bannerImage: "/products/Orbis Wall Sconce (2).png",
+    heroImage: "/products/orbis-wall-sconce.webp",
+    bannerImage: "/products/Orbis Wall Sconce (2).webp",
     itemSeed: "410069",
     leadWeeks: 8,
     finishName: "Brushed Brass",

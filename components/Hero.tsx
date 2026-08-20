@@ -8,7 +8,7 @@ export default function Hero() {
       {/* Фоновое изображение */}
       <Image
         alt=""
-        src="/assets/morrow-hero.png"
+        src="/assets/morrow-hero.webp"
         fill
         priority
         sizes="1536px"
@@ -19,10 +19,12 @@ export default function Hero() {
       <video
         className="absolute top-0 z-10 h-[695px] w-[768px] object-cover transition-transform duration-700 ease-out group-hover:-translate-x-[400.5px]"
         style={{ left: "1168.5px" }}
+        poster="/assets/morrow-hero.webp"
         autoPlay
         muted
         loop
         playsInline
+        preload="metadata"
         src="/assets/morrow-hero.mp4"
       />
 
@@ -60,4 +62,3 @@ export default function Hero() {
     </div>
   );
 }
-

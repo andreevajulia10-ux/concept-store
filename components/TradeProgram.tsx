@@ -38,7 +38,7 @@ export default function TradeProgram() {
 
             <div className="h-[200px] w-[160px] shrink-0 overflow-clip">
               <Image
-                src="/assets/trade-image.png"
+                src="/assets/trade-image.webp"
                 alt="Trade Program"
                 width={160}
                 height={200}

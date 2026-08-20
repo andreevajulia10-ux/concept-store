@@ -22,10 +22,10 @@ const items: FeaturedItem[] = [
         quiet glow that changes with the room.
       </>
     ),
-    miniImage: "/assets/featured-arc-mini.png",
+    miniImage: "/assets/featured-arc-mini.webp",
     productName: "Arc Glass Sconce",
     price: "From $285",
-    mainImage: "/assets/featured-arc-main.png",
+    mainImage: "/assets/featured-arc-main.webp",
   },
   {
     slug: "orbis-wall-light",
@@ -39,10 +39,10 @@ const items: FeaturedItem[] = [
         variation and character to the space.
       </>
     ),
-    miniImage: "/assets/featured-ceramic-mini.png",
+    miniImage: "/assets/featured-ceramic-mini.webp",
     productName: "Ceramic Disc Surface Mount",
     price: "From $1,200.00",
-    mainImage: "/assets/featured-orbis-main.png",
+    mainImage: "/assets/featured-orbis-main.webp",
   },
 ];
 

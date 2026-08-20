@@ -10,19 +10,19 @@ type Post = {
 const posts: Post[] = [
   {
     date: "August 12, 2026",
-    image: "/assets/journal-august.png",
+    image: "/assets/journal-august.webp",
     title: "Inside Morrow House",
     body: "A closer look at the spaces, materials and objects shaping our New York showroom.",
   },
   {
     date: "July 24, 2026",
-    image: "/assets/journal-july.png",
+    image: "/assets/journal-july.webp",
     title: "The Shape of Quiet Light",
     body: "Exploring how proportion, texture and shadow influence the way a room feels.",
   },
   {
     date: "June 8, 2026",
-    image: "/assets/journal-june.png",
+    image: "/assets/journal-june.webp",
     title: "From Material to Object",
     body: "A study in stone, glass and metal — and the small decisions behind every Morrow piece.",
   },

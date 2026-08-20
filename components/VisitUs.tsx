@@ -38,7 +38,7 @@ export default function VisitUs() {
             <div className="flex w-[435px] shrink-0 flex-col justify-between">
               <div className="h-[543.75px] w-full overflow-clip">
                 <Image
-                  src="/assets/visit-left.png"
+                  src="/assets/visit-left.webp"
                   alt="Quarters showroom"
                   width={435}
                   height={544}
@@ -66,7 +66,7 @@ export default function VisitUs() {
 
             <div className="h-[840px] w-[672px] shrink-0 overflow-clip">
               <Image
-                src="/assets/visit-right.png"
+                src="/assets/visit-right.webp"
                 alt="Morrow House interior"
                 width={672}
                 height={840}

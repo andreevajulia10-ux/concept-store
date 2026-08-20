@@ -12,12 +12,12 @@ type CollectionItem = {
 };
 
 const categories: CollectionItem[] = [
-  { title: "Sconces", count: 40, image: "/assets/collection-sconces.png", cat: "Wall Lights" },
-  { title: "Pendants", count: 24, image: "/assets/collection-pendants.png", cat: "Pendants" },
-  { title: "Floor Lamps", count: 5, image: "/assets/collection-floor-lamps.png", cat: "Floor Lamps" },
-  { title: "Surface Mounts", count: 49, image: "/assets/collection-surface-mounts.png", cat: "Ceiling Lights" },
-  { title: "Chandeliers", count: 3, image: "/assets/collection-chandeliers.png", cat: "Chandeliers" },
-  { title: "Table Lamps", count: 16, image: "/assets/collection-table-lamps.png", cat: "Table Lamps" },
+  { title: "Sconces", count: 40, image: "/assets/collection-sconces.webp", cat: "Wall Lights" },
+  { title: "Pendants", count: 24, image: "/assets/collection-pendants.webp", cat: "Pendants" },
+  { title: "Floor Lamps", count: 5, image: "/assets/collection-floor-lamps.webp", cat: "Floor Lamps" },
+  { title: "Surface Mounts", count: 49, image: "/assets/collection-surface-mounts.webp", cat: "Ceiling Lights" },
+  { title: "Chandeliers", count: 3, image: "/assets/collection-chandeliers.webp", cat: "Chandeliers" },
+  { title: "Table Lamps", count: 16, image: "/assets/collection-table-lamps.webp", cat: "Table Lamps" },
 ];
 
 function Arrow({ flip = false }: { flip?: boolean }) {

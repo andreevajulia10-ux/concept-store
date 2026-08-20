@@ -5,13 +5,13 @@ import { useEffect, useRef } from "react";
 import Arrow from "./Arrow";
 
 const collections = [
-  { name: "Lido", image: "/assets/collections-lido.png" },
-  { name: "Strata", image: "/assets/collections-strata.png" },
-  { name: "Saga", image: "/assets/collections-saga.png" },
-  { name: "Aster Chandelier", image: "/assets/collections-aster.png" },
-  { name: "Core", image: "/assets/collections-core.png" },
-  { name: "Curio", image: "/assets/collections-curio.png" },
-  { name: "Terra", image: "/assets/collections-terra.png" },
+  { name: "Lido", image: "/assets/collections-lido.webp" },
+  { name: "Strata", image: "/assets/collections-strata.webp" },
+  { name: "Saga", image: "/assets/collections-saga.webp" },
+  { name: "Aster Chandelier", image: "/assets/collections-aster.webp" },
+  { name: "Core", image: "/assets/collections-core.webp" },
+  { name: "Curio", image: "/assets/collections-curio.webp" },
+  { name: "Terra", image: "/assets/collections-terra.webp" },
 ];
 
 export default function CollectionsCarousel() {

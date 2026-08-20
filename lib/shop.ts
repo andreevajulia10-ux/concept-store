@@ -10,31 +10,31 @@ export const products: ShopProduct[] = [
   /* ===== Chandeliers ===== */
   {
     name: "Aster Chandelier",
-    image: "/products/aster-chandelier.png",
+    image: "/products/aster-chandelier.webp",
     price: "From $1,295",
     slug: "aster-chandelier",
   },
   {
     name: "Halo Chandelier",
-    image: "/products/halo-chandelier.png",
+    image: "/products/halo-chandelier.webp",
     price: "From $1,595",
     slug: "halo-chandelier",
   },
   {
     name: "Orbis Chandelier",
-    image: "/products/orbis-chandelier.png",
+    image: "/products/orbis-chandelier.webp",
     price: "From $1,795",
     slug: "orbis-chandelier",
   },
   {
     name: "Estelle Chandelier",
-    image: "/products/estelle-chandelier.png",
+    image: "/products/estelle-chandelier.webp",
     price: "From $1,995",
     slug: "estelle-chandelier",
   },
   {
     name: "Solstice Chandelier",
-    image: "/products/solstice-chandelier.png",
+    image: "/products/solstice-chandelier.webp",
     price: "From $2,395",
     slug: "solstice-chandelier",
   },
@@ -42,31 +42,31 @@ export const products: ShopProduct[] = [
   /* ===== Pendants ===== */
   {
     name: "Lumen Pendant",
-    image: "/products/lumen-pendant.png",
+    image: "/products/lumen-pendant.webp",
     price: "From $295",
     slug: "lumen-pendant",
   },
   {
     name: "Halo Pendant",
-    image: "/products/halo-pendant.png",
+    image: "/products/halo-pendant.webp",
     price: "From $425",
     slug: "halo-pendant",
   },
   {
     name: "Ember Drop Pendant",
-    image: "/products/ember-drop-pendant.png",
+    image: "/products/ember-drop-pendant.webp",
     price: "From $365",
     slug: "ember-drop-pendant",
   },
   {
     name: "Aurelia Pendant",
-    image: "/products/aurelia-pendant.png",
+    image: "/products/aurelia-pendant.webp",
     price: "From $345",
     slug: "aurelia-pendant",
   },
   {
     name: "Axis Linear Pendant",
-    image: "/products/axis-linear-pendant.png",
+    image: "/products/axis-linear-pendant.webp",
     price: "From $465",
     slug: "axis-linear-pendant",
   },
@@ -74,19 +74,19 @@ export const products: ShopProduct[] = [
   /* ===== Table Lamps ===== */
   {
     name: "Lumen Table Lamp",
-    image: "/products/lumen-table-lamp.png",
+    image: "/products/lumen-table-lamp.webp",
     price: "From $215",
     slug: "lumen-table-lamp",
   },
   {
     name: "Orbis Table Lamp",
-    image: "/products/orbis-table-lamp.png",
+    image: "/products/orbis-table-lamp.webp",
     price: "From $245",
     slug: "orbis-table-lamp",
   },
   {
     name: "Aster Table Lamp",
-    image: "/products/aster-table-lamp.png",
+    image: "/products/aster-table-lamp.webp",
     price: "From $265",
     slug: "aster-table-lamp",
   },
@@ -94,13 +94,13 @@ export const products: ShopProduct[] = [
   /* ===== Floor Lamps ===== */
   {
     name: "Arc Floor Lamp",
-    image: "/products/floor-lamp.png",
+    image: "/products/floor-lamp.webp",
     price: "From $585",
     slug: "arc-floor-lamp",
   },
   {
     name: "Orbis Floor Lamp",
-    image: "/products/orbis-floor-lamp.png",
+    image: "/products/orbis-floor-lamp.webp",
     price: "From $545",
     slug: "orbis-floor-lamp",
   },
@@ -108,7 +108,7 @@ export const products: ShopProduct[] = [
   /* ===== Wall Lights ===== */
   {
     name: "Orbis Wall Sconce",
-    image: "/products/orbis-wall-sconce.png",
+    image: "/products/orbis-wall-sconce.webp",
     price: "From $185",
     slug: "orbis-wall-sconce",
   },
