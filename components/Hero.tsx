@@ -4,21 +4,20 @@ import Tagline from "./Tagline";
 
 export default function Hero() {
   return (
-    <div className="group relative h-[695px] w-[1536px] overflow-hidden bg-black">
+    <div className="group relative h-[695px] w-full overflow-hidden bg-black max-sm:h-[560px]">
       {/* Фоновое изображение */}
       <Image
         alt=""
         src="/assets/morrow-hero.webp"
         fill
         priority
-        sizes="1536px"
-        style={{ objectFit: "cover" }}
+        sizes="(max-width: 640px) 100vw, 1536px"
+        className="object-cover"
       />
 
       {/* Видео поверх правой части; выезжает вперёд при наведении */}
       <video
-        className="absolute top-0 z-10 h-[695px] w-[768px] object-cover transition-transform duration-700 ease-out group-hover:-translate-x-[400.5px]"
-        style={{ left: "1168.5px" }}
+        className="absolute left-[1168.5px] top-0 z-10 hidden h-[695px] w-[768px] object-cover transition-transform duration-700 ease-out group-hover:-translate-x-[400.5px] lg:block"
         poster="/assets/morrow-hero.webp"
         autoPlay
         muted
@@ -29,22 +28,13 @@ export default function Hero() {
       />
 
       {/* Центральный слоган из макета */}
-      <div
-        className="absolute z-10 text-[#f8f7f1]"
-        style={{ left: "159px", top: "336px" }}
-      >
+      <div className="absolute left-[159px] top-[336px] z-10 text-[#f8f7f1] max-sm:left-1/2 max-sm:top-[38%] max-sm:-translate-x-1/2 max-sm:-translate-y-1/2">
         <Tagline />
       </div>
 
       {/* Контейнер с текстом в нижней части */}
-      <div
-        className="absolute z-20 flex flex-col justify-end items-end"
-        style={{ left: "72px", top: 0, width: "1392px", height: "695px", paddingBottom: "28px", paddingRight: "348px" }}
-      >
-        <div
-          className="flex flex-col justify-between items-start"
-          style={{ width: "261px", height: "333.5px" }}
-        >
+      <div className="absolute left-[72px] top-0 z-20 flex h-[695px] w-[1392px] flex-col items-end justify-end pb-7 pr-[348px] max-sm:inset-x-0 max-sm:bottom-0 max-sm:top-auto max-sm:h-auto max-sm:w-full max-sm:items-start max-sm:px-4 max-sm:pb-6 max-sm:pr-4">
+        <div className="flex h-[333.5px] w-[261px] flex-col items-start justify-between max-sm:h-auto max-sm:w-full max-sm:gap-[18px]">
           <p className="font-['Questrial'] whitespace-nowrap text-[14px] leading-[16.8px] text-[#f8f7f1]">
             Objects for slower living
           </p>

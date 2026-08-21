@@ -19,11 +19,11 @@ import {
 
 function ShopHeader() {
   return (
-    <div className="flex h-[60px] w-full items-center justify-between px-[72px] font-['Questrial'] text-[16px] leading-[20px] text-[#4a0a05]">
+    <div className="flex h-[60px] w-full items-center justify-between px-[72px] font-['Questrial'] text-[16px] leading-[20px] text-[#4a0a05] max-sm:px-4">
       <Link href="/">
         <MorrowLogo className="shrink-0" />
       </Link>
-      <nav className="flex items-center gap-[56px] whitespace-nowrap">
+      <nav className="flex items-center gap-[56px] whitespace-nowrap max-sm:hidden">
         <Link href="/shop" className="cursor-pointer">Shop</Link>
         <Link href="/#collections" className="cursor-pointer hover:opacity-60">Collections</Link>
         <Link href="/#collection" className="cursor-pointer hover:opacity-60">Objects</Link>
@@ -35,8 +35,6 @@ function ShopHeader() {
 }
 
 type View = "S" | "M" | "L";
-
-const viewColumns: Record<View, number> = { S: 4, M: 3, L: 2 };
 
 function ShopPage() {
   const searchParams = useSearchParams();
@@ -56,7 +54,10 @@ function ShopPage() {
   // Синхронизация категории при изменении URL-параметра ?cat=
   useEffect(() => {
     if (urlCat && (categories as string[]).includes(urlCat)) {
-      setCategory(urlCat as Category);
+      const frame = window.requestAnimationFrame(() => {
+        setCategory(urlCat as Category);
+      });
+      return () => window.cancelAnimationFrame(frame);
     }
   }, [urlCat]);
 
@@ -102,10 +103,10 @@ function ShopPage() {
     <div className="mx-auto flex w-full flex-col bg-[#fafaf9]">
       <ShopHeader />
 
-      <section className="mx-auto flex w-[1392px] gap-[12px] pt-[20px]">
+      <section className="mx-auto flex w-[1392px] gap-[12px] pt-[20px] max-sm:w-full max-sm:flex-col max-sm:px-4 max-sm:pt-[40px]">
         {/* ===== Боковое меню каталога ===== */}
-        <aside className="sticky top-0 self-start pt-[78px]">
-          <nav className="flex w-[261px] flex-col font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
+        <aside className="sticky top-0 self-start pt-[78px] max-sm:static max-sm:w-full max-sm:pt-0">
+          <nav className="flex w-[261px] flex-col font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] max-sm:w-full">
             {[
               { label: "All Products", cat: "All" as const },
               { label: "New Arrivals", cat: "All" as const },
@@ -171,9 +172,9 @@ function ShopPage() {
         </aside>
 
         {/* ===== Панель инструментов + сетка ===== */}
-        <div className="flex w-[1119px] flex-col">
+        <div className="flex w-[1119px] flex-col max-sm:w-full">
           {/* Панель инструментов */}
-          <div className="flex h-[62px] items-center justify-between">
+          <div className="flex h-[62px] items-center justify-between max-sm:h-auto max-sm:flex-wrap max-sm:gap-y-2">
             <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
               All Objects {products.length}
             </span>
@@ -194,7 +195,7 @@ function ShopPage() {
                 </svg>
               </button>
               {lightOpen && (
-                <div className="absolute left-[42px] top-[22px] z-40 w-[180px] border-[0.8px] border-[#4a0a05] bg-[#fafaf9] shadow-md">
+                <div className="absolute left-[42px] top-[22px] z-40 w-[180px] border-[0.8px] border-[#4a0a05] bg-[#fafaf9] shadow-md max-sm:left-0">
                   {categories.map((c) => (
                     <button
                       key={c}
@@ -229,9 +230,9 @@ function ShopPage() {
               </button>
 
               {filterOpen && (
-                <div className="absolute right-0 top-[22px] z-40 flex w-[696px] gap-[12px] border-[0.8px] border-[#4a0a05] bg-[#fafaf9] p-[16px] shadow-md">
+                <div className="absolute right-0 top-[22px] z-40 flex w-[696px] gap-[12px] border-[0.8px] border-[#4a0a05] bg-[#fafaf9] p-[16px] shadow-md max-sm:fixed max-sm:inset-x-4 max-sm:top-[96px] max-sm:max-h-[calc(100vh-112px)] max-sm:w-auto max-sm:flex-col max-sm:overflow-y-auto">
                   {/* Materials */}
-                  <div className="flex w-[330px] flex-col gap-[6px]">
+                  <div className="flex w-[330px] flex-col gap-[6px] max-sm:w-full">
                     <span className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
                       Materials
                     </span>
@@ -263,7 +264,7 @@ function ShopPage() {
                   </div>
 
                   {/* Lead Time */}
-                  <div className="flex w-[330px] flex-col gap-[6px]">
+                  <div className="flex w-[330px] flex-col gap-[6px] max-sm:w-full">
                     <span className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
                       Lead Time
                     </span>
@@ -320,7 +321,7 @@ function ShopPage() {
           </div>
 
           {/* Сетка товаров */}
-          <div className={`mt-[40px] grid gap-[12px] ${gridClass}`}>
+          <div className={`mt-[40px] grid gap-[12px] max-sm:grid-cols-2 max-sm:gap-[16px] ${gridClass}`}>
             {visible.map((p) => (
               <ShopProductCard key={p.name} product={p} />
             ))}

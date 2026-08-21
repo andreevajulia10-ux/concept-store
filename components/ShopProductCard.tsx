@@ -30,7 +30,7 @@ export default function ShopProductCard({
 
   // Медиа-контент карточки (изображение товара).
   const media = (
-    <div className="relative h-[336px] w-full overflow-clip bg-[#f8f7f1]">
+    <div className="relative h-[336px] w-full overflow-clip bg-[#f8f7f1] max-sm:h-[46vw]">
       <Image
         src={product.image}
         alt={product.name}
@@ -44,7 +44,7 @@ export default function ShopProductCard({
   // Текстовый блок: название + цена.
   const caption = (
     <div className="flex flex-col">
-      <h3 className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
+      <h3 className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
         {product.name}
       </h3>
       <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">

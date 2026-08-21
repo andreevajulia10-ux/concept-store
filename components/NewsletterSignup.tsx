@@ -12,18 +12,18 @@ export default function NewsletterSignup() {
   };
 
   return (
-    <section className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px]">
-      <div className="flex gap-[12px]">
+    <section className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px] max-sm:px-4">
+      <div className="flex gap-[12px] max-sm:flex-col">
         {/* Заголовок слева */}
-        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
           <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
             Newsletter
           </span>
         </div>
 
         {/* Правая колонка */}
-        <div className="flex w-[1119px] flex-col items-end border-t-[0.8px] border-[#4a0a05] pt-[60px] pr-[87px]">
-          <div className="flex w-[609px] flex-col gap-[40px] pl-[24px] py-[20px]">
+        <div className="flex w-[1119px] flex-col items-end border-t-[0.8px] border-[#4a0a05] pt-[60px] pr-[87px] max-sm:w-full max-sm:items-start max-sm:pr-0 max-sm:pt-[40px]">
+          <div className="flex w-[609px] flex-col gap-[40px] pl-[24px] py-[20px] max-sm:w-full max-sm:pl-0">
             <h2 className="w-full whitespace-pre-wrap font-['Questrial'] text-[26px] leading-[31.2px] text-[#4a0a05]">
               A slower way to stay in the know.
               <br />
@@ -51,7 +51,7 @@ export default function NewsletterSignup() {
                   Sign Up
                 </button>
               </div>
-              <p className="max-w-[340px] whitespace-nowrap font-['Arimo'] text-[14px] leading-[16.8px] text-[#4a0a05]">
+              <p className="max-w-[340px] whitespace-nowrap font-['Arimo'] text-[14px] leading-[16.8px] text-[#4a0a05] max-sm:whitespace-normal">
                 {done
                   ? "Thank you for subscribing."
                   : "By signing up you are agreeing to our Privacy Policy."}

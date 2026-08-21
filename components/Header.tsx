@@ -15,12 +15,12 @@ export default function Header({
 
   return (
     <div
-      className={`font-['Questrial'] absolute left-0 top-0 z-30 flex h-[60px] w-[1536px] items-center justify-between px-[72px] transition-colors duration-300 ${
+      className={`font-['Questrial'] absolute left-0 top-0 z-30 flex h-[60px] w-full items-center justify-between px-[72px] transition-colors duration-300 max-sm:px-4 ${
         isHover ? "bg-[#ffffff] text-[#4a0a05]" : "bg-transparent text-[#f8f7f1]"
       } hover:bg-[#ffffff] hover:text-[#4a0a05] ${className ?? ""}`}
     >
       <MorrowLogo className="shrink-0" />
-      <nav className="flex items-center gap-[56px] text-[16px] leading-[20px] whitespace-nowrap">
+      <nav className="flex items-center gap-[56px] text-[16px] leading-[20px] whitespace-nowrap max-sm:hidden">
         <Link href="/shop" className="cursor-pointer">Shop</Link>
         <Link href="/#collections" className="cursor-pointer hover:opacity-60">Collections</Link>
         <Link href="/#collection" className="cursor-pointer hover:opacity-60">Objects</Link>
@@ -30,4 +30,3 @@ export default function Header({
     </div>
   );
 }
-

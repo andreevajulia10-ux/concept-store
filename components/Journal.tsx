@@ -30,23 +30,23 @@ const posts: Post[] = [
 
 export default function Journal() {
   return (
-    <section id="journal" className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px]">
-      <div className="flex gap-[12px]">
+    <section id="journal" className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px] max-sm:px-4">
+      <div className="flex gap-[12px] max-sm:flex-col">
         {/* Заголовок слева */}
-        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
           <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
             Journal
           </span>
         </div>
 
         {/* Список постов */}
-        <div className="flex w-[1119px] gap-[12px] border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[1119px] gap-[12px] border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full max-sm:grid max-sm:grid-cols-2 max-sm:gap-[16px]">
           {posts.map((post) => (
-            <article key={post.title} className="flex w-[365px] shrink-0 flex-col">
+            <article key={post.title} className="flex w-[365px] shrink-0 flex-col max-sm:w-full">
               <span className="pb-[8px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
                 {post.date}
               </span>
-              <div className="mt-[16px] h-[424.9px] w-full overflow-clip">
+              <div className="mt-[16px] h-[424.9px] w-full overflow-clip max-sm:h-[52vw]">
                 <Image
                   src={post.image}
                   alt={post.title}

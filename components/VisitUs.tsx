@@ -2,26 +2,26 @@ import Image from "next/image";
 
 export default function VisitUs() {
   return (
-    <section id="visit" className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px]">
-      <div className="flex gap-[12px]">
+    <section id="visit" className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px] max-sm:px-4">
+      <div className="flex gap-[12px] max-sm:flex-col">
         {/* Заголовок слева */}
-        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
           <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
             Visit Us
           </span>
         </div>
 
         {/* Правая колонка */}
-        <div className="flex w-[1119px] flex-col gap-[60px] border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[1119px] flex-col gap-[60px] border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full max-sm:gap-[40px]">
           {/* Заголовок + описание */}
-          <div className="flex gap-[12px]">
-            <div className="flex w-[435px] shrink-0 flex-col">
+          <div className="flex gap-[12px] max-sm:flex-col">
+            <div className="flex w-[435px] shrink-0 flex-col max-sm:w-full">
               <h3 className="whitespace-nowrap font-['Questrial'] text-[26px] leading-[31.2px] text-[#4a0a05]">
                 Morrow House
               </h3>
             </div>
-            <div className="flex w-[245px] shrink-0 flex-col gap-[20px] pl-[87px]">
-              <p className="w-[498px] font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">
+            <div className="flex w-[245px] shrink-0 flex-col gap-[20px] pl-[87px] max-sm:w-full max-sm:pl-0">
+              <p className="w-[498px] font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05] max-sm:w-full">
                 Morrow House is a place to experience our lighting and objects
                 in a lived-in setting. Explore materials, see pieces
                 illuminated in space, and discover how each collection changes
@@ -34,9 +34,9 @@ export default function VisitUs() {
           </div>
 
           {/* Изображения */}
-          <div className="flex gap-[12px]">
-            <div className="flex w-[435px] shrink-0 flex-col justify-between">
-              <div className="h-[543.75px] w-full overflow-clip">
+          <div className="flex gap-[12px] max-sm:flex-col">
+            <div className="flex w-[435px] shrink-0 flex-col justify-between max-sm:w-full">
+              <div className="h-[543.75px] w-full overflow-clip max-sm:h-[120vw]">
                 <Image
                   src="/assets/visit-left.webp"
                   alt="Quarters showroom"
@@ -45,7 +45,7 @@ export default function VisitUs() {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="flex flex-col gap-[20px] pr-[87px]">
+              <div className="flex flex-col gap-[20px] pr-[87px] max-sm:pr-0">
                 <div className="font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">
                   <p>
                     Open Wednesday–Saturday
@@ -64,7 +64,7 @@ export default function VisitUs() {
               </div>
             </div>
 
-            <div className="h-[840px] w-[672px] shrink-0 overflow-clip">
+            <div className="h-[840px] w-[672px] shrink-0 overflow-clip max-sm:h-[120vw] max-sm:w-full">
               <Image
                 src="/assets/visit-right.webp"
                 alt="Morrow House interior"

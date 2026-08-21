@@ -21,8 +21,8 @@ export default function NewsletterPopover() {
   };
 
   return (
-    <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center px-[72px]">
-      <div className="relative flex w-full max-w-[1392px] border-t-[0.8px] border-[#4a0a05] bg-white px-[16.8px] pb-[10px] pt-[12.8px]">
+    <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center px-[72px] max-sm:bottom-3 max-sm:px-4">
+      <div className="relative flex w-full max-w-[1392px] border-t-[0.8px] border-[#4a0a05] bg-white px-[16.8px] pb-[10px] pt-[12.8px] max-sm:max-h-[80vh] max-sm:flex-col max-sm:overflow-y-auto max-sm:pr-[38px]">
         {/* Крестик закрытия */}
         <button
           type="button"
@@ -41,14 +41,14 @@ export default function NewsletterPopover() {
         </button>
 
         {/* Заголовок */}
-        <div className="mr-[60px] flex w-[261px] shrink-0 flex-col">
+        <div className="mr-[60px] flex w-[261px] shrink-0 flex-col max-sm:mb-[20px] max-sm:mr-0 max-sm:w-full">
           <h3 className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16px] text-[#4a0a05]">
             Our Newsletter
           </h3>
         </div>
 
         {/* Контент */}
-        <div className="flex w-[1119px] flex-col gap-[22px]">
+        <div className="flex w-[1119px] flex-col gap-[22px] max-sm:w-full">
           <p className="max-w-[340px] font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">
             Sign up for our Newsletter to receive seasonal promotions and event
             invitations. We respect your inbox and only send e-mails worth your
@@ -56,7 +56,7 @@ export default function NewsletterPopover() {
           </p>
 
           <form onSubmit={submit} className="flex w-full max-w-[426px] flex-col gap-[10px]">
-            <div className="flex items-center">
+            <div className="flex items-center max-sm:flex-col max-sm:items-stretch max-sm:gap-[8px]">
               <input
                 type="email"
                 value={email}
@@ -66,7 +66,7 @@ export default function NewsletterPopover() {
               />
               <button
                 type="submit"
-                className="flex h-[32px] min-w-[123px] cursor-pointer items-center justify-center border-y-[0.8px] border-r-[0.8px] border-[#4a0a05] font-['Questrial'] text-[14px] text-[#4a0a05] hover:opacity-60"
+                className="flex h-[32px] min-w-[123px] cursor-pointer items-center justify-center border-y-[0.8px] border-r-[0.8px] border-[#4a0a05] font-['Questrial'] text-[14px] text-[#4a0a05] hover:opacity-60 max-sm:border-l-[0.8px]"
               >
                 Sign Up
               </button>
@@ -81,4 +81,3 @@ export default function NewsletterPopover() {
     </div>
   );
 }
-

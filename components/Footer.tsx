@@ -40,9 +40,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="mx-auto w-full max-w-[1536px] px-[72px]">
+    <footer className="mx-auto w-full max-w-[1536px] px-[72px] max-sm:px-4">
       {/* Уровень 1: теглайн + контакты */}
-      <div className="flex items-start justify-between gap-[12px] border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+      <div className="flex items-start justify-between gap-[12px] border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:flex-col">
 
         <Image
           src="/assets/footer-tagline.svg"
@@ -53,7 +53,7 @@ export default function Footer() {
           className="mt-[2px] h-[15px] w-[78px]"
         />
 
-        <div className="grid w-[783px] grid-cols-3 gap-x-[12px] gap-y-[28px]">
+        <div className="grid w-[783px] grid-cols-3 gap-x-[12px] gap-y-[28px] max-sm:w-full max-sm:grid-cols-2">
           {/* col 1 */}
           <div className="flex flex-col">
             <div className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
@@ -94,9 +94,9 @@ export default function Footer() {
       </div>
 
       {/* Уровень 2: Newsletter + колонки ссылок */}
-      <div className="mt-[36px] flex justify-between gap-[12px] border-t-[0.8px] border-[#4a0a05] pt-[10px]">
+      <div className="mt-[36px] flex justify-between gap-[12px] border-t-[0.8px] border-[#4a0a05] pt-[10px] max-sm:flex-col max-sm:gap-[40px]">
         {/* Newsletter слева */}
-        <div className="flex w-[597px] flex-col gap-[48px] pr-[12px]">
+        <div className="flex w-[597px] flex-col gap-[48px] pr-[12px] max-sm:w-full max-sm:pr-0">
           <span className="max-w-[340px] whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
             Newsletter
           </span>
@@ -129,7 +129,7 @@ export default function Footer() {
         </div>
 
         {/* Колонки ссылок */}
-        <div className="flex gap-[24px]">
+        <div className="flex gap-[24px] max-sm:grid max-sm:grid-cols-3 max-sm:gap-[16px]">
           {[
             { title: "Shop", links: shopLinks },
             { title: "About", links: aboutLinks },
@@ -137,7 +137,7 @@ export default function Footer() {
           ].map((col) => (
             <div
               key={col.title}
-              className="flex w-[253px] flex-col gap-[32px] pt-[10px]"
+              className="flex w-[253px] flex-col gap-[32px] pt-[10px] max-sm:w-full"
             >
               <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
                 {col.title}
@@ -158,7 +158,7 @@ export default function Footer() {
       </div>
 
       {/* Уровень 3: копирайт */}
-      <div className="mt-[12px] flex items-end justify-between border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+      <div className="mt-[12px] flex items-end justify-between border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:flex-col max-sm:items-start max-sm:gap-[12px]">
         <p className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
           © Morrow Objects 2026. All rights reserved.
         </p>

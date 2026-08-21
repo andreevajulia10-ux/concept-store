@@ -71,18 +71,18 @@ export default function CollectionsCarousel() {
   };
 
   return (
-    <section id="collections" className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px]">
-      <div className="flex gap-[12px]">
+    <section id="collections" className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px] max-sm:px-4">
+      <div className="flex gap-[12px] max-sm:flex-col">
         {/* Заголовок слева */}
-        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
           <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
             Collections
           </span>
         </div>
 
         {/* Правая колонка */}
-        <div className="relative flex w-[1119px] flex-col border-t-[0.8px] border-[#4a0a05] pt-[12px]">
-          <p className="max-w-[522px] font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">
+        <div className="relative flex w-[1119px] flex-col border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
+          <p className="max-w-[522px] font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05] max-sm:max-w-full">
             Every Morrow collection explores a different relationship between
             light, material and form. From sculptural glass to stone, metal and
             ceramic, every series shares a coherent point of view within a
@@ -96,12 +96,12 @@ export default function CollectionsCarousel() {
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
-            className="-mx-[72px] mt-[144px] flex w-[calc(100%+144px)] cursor-grab gap-[12px] overflow-x-auto overflow-y-visible px-[72px] pb-6 active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="-mx-[72px] mt-[144px] flex w-[calc(100%+144px)] cursor-grab gap-[12px] overflow-x-auto overflow-y-visible px-[72px] pb-6 active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-sm:mx-0 max-sm:mt-[40px] max-sm:w-full max-sm:gap-[16px] max-sm:px-0"
           >
             {collections.map((c) => (
               <div
                 key={c.name}
-                className="relative h-[537px] w-[435px] shrink-0 overflow-clip bg-[#bcb6a6]"
+                className="relative h-[537px] w-[435px] shrink-0 overflow-clip bg-[#bcb6a6] max-sm:h-[120vw] max-sm:w-[80vw]"
               >
                 <Image
                   src={c.image}

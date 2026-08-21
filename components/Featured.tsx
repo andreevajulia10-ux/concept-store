@@ -48,10 +48,10 @@ const items: FeaturedItem[] = [
 
 export default function Featured() {
   return (
-    <section className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px]">
-      <div className="flex gap-[12px]">
+    <section className="mx-auto flex w-full max-w-[1536px] flex-col px-[72px] max-sm:px-4">
+      <div className="flex gap-[12px] max-sm:flex-col">
         {/* Левая колонка: заголовок */}
-        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
           <div className="flex items-start gap-[4px]">
             <span className="mt-[2px] inline-block size-[8px] shrink-0 rounded-full bg-[#4a0a05]" />
             <span className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
@@ -63,13 +63,13 @@ export default function Featured() {
         </div>
 
         {/* Правая колонка */}
-        <div className="flex w-[1119px] flex-col gap-[80px] border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[1119px] flex-col gap-[80px] border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full max-sm:gap-[60px]">
           {items.map((item) => (
-            <article key={item.badge} className="group flex gap-[12px]">
+            <article key={item.badge} className="group flex gap-[12px] max-sm:flex-col">
               {/* Большое изображение с бейджем */}
               <Link
                 href={`/product/${item.slug}`}
-                className="relative block h-[1068.85px] w-[870px] shrink-0 overflow-clip"
+                className="relative block h-[1068.85px] w-[870px] shrink-0 overflow-clip max-sm:h-[120vw] max-sm:w-full"
               >
                 <Image
                   src={item.mainImage}
@@ -86,7 +86,7 @@ export default function Featured() {
               </Link>
 
               {/* Правая колонка: описание + мини-карточка */}
-              <div className="sticky top-0 flex h-fit w-[237px] shrink-0 flex-col gap-[80px] self-start">
+              <div className="sticky top-0 flex h-fit w-[237px] shrink-0 flex-col gap-[80px] self-start max-sm:static max-sm:mt-[20px] max-sm:w-full max-sm:gap-[40px]">
                 <div className="font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">
                   {item.description}
                 </div>
@@ -126,4 +126,3 @@ export default function Featured() {
     </section>
   );
 }
-

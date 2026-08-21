@@ -16,13 +16,13 @@ export default function Home() {
       <div className="mt-[20px]">
         <Collection />
       </div>
-      <div className="mt-[58px]">
+      <div className="mt-[58px] max-sm:mt-[40px]">
         <Featured />
       </div>
-      <div className="mt-[88px]">
+      <div className="mt-[88px] max-sm:mt-[56px]">
         <TradeProgram />
       </div>
-      <div className="mt-[88px]">
+      <div className="mt-[88px] max-sm:mt-[56px]">
         <CollectionsCarousel />
       </div>
       <div className="mt-[40px]">
@@ -34,11 +34,10 @@ export default function Home() {
       <div className="mt-[8px]">
         <Journal />
       </div>
-      <div className="mt-[121px]">
+      <div className="mt-[121px] max-sm:mt-[72px]">
         <Footer />
       </div>
       <NewsletterPopover />
     </main>
   );
 }
-

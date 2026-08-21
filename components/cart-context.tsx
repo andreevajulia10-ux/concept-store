@@ -39,13 +39,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // Загрузка корзины из localStorage только на клиенте.
   useEffect(() => {
+    let storedItems: CartItem[] | null = null;
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw) as CartItem[]);
+      if (raw) storedItems = JSON.parse(raw) as CartItem[];
     } catch {
       /* ignore */
     }
-    setHydrated(true);
+
+    const frame = window.requestAnimationFrame(() => {
+      if (storedItems) setItems(storedItems);
+      setHydrated(true);
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   // Сохранение при изменении.
@@ -110,4 +116,3 @@ export function useCart(): CartContextValue {
   }
   return ctx;
 }
-

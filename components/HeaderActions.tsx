@@ -45,19 +45,19 @@ export default function HeaderActions() {
   const toggle = (p: Panel) => setPanel((cur) => (cur === p ? null : p));
 
   return (
-    <div ref={rootRef} className="relative flex items-center gap-[20px]">
+    <div ref={rootRef} className="relative flex items-center gap-[20px] max-sm:gap-[12px]">
       {/* Кнопка Поиск */}
       <button
         type="button"
         onClick={() => toggle("search")}
-        className="cursor-pointer whitespace-nowrap font-['Questrial'] text-[16px] leading-[20px] hover:opacity-60"
+        className="cursor-pointer whitespace-nowrap font-['Questrial'] text-[16px] leading-[20px] hover:opacity-60 max-sm:text-[14px]"
       >
         Search
       </button>
 
       <Link
         href="/#journal"
-        className="cursor-pointer whitespace-nowrap font-['Questrial'] text-[16px] leading-[20px] hover:opacity-60"
+        className="cursor-pointer whitespace-nowrap font-['Questrial'] text-[16px] leading-[20px] hover:opacity-60 max-sm:hidden"
       >
         Journal
       </Link>
@@ -66,7 +66,7 @@ export default function HeaderActions() {
       <button
         type="button"
         onClick={() => toggle("cart")}
-        className="cursor-pointer whitespace-nowrap font-['Questrial'] text-[16px] leading-[20px] hover:opacity-60"
+        className="cursor-pointer whitespace-nowrap font-['Questrial'] text-[16px] leading-[20px] hover:opacity-60 max-sm:text-[14px]"
       >
         Cart ({count})
       </button>
@@ -74,7 +74,7 @@ export default function HeaderActions() {
       {/* ===== Панель поиска ===== */}
       {panel === "search" && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full flex-col bg-[#fafaf9]">
-          <div className="flex h-[60px] w-full items-center justify-between border-b-[0.8px] border-[#4a0a05] px-[72px]">
+          <div className="flex h-[60px] w-full items-center justify-between border-b-[0.8px] border-[#4a0a05] px-[72px] max-sm:px-4">
             <span className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
               Search
             </span>
@@ -91,7 +91,7 @@ export default function HeaderActions() {
             </button>
           </div>
 
-          <div className="flex w-full flex-col px-[72px] pt-[120px]">
+          <div className="flex w-full flex-col px-[72px] pt-[120px] max-sm:px-4 max-sm:pt-[60px]">
             <div className="flex w-full max-w-[1392px] items-center border-b-[0.8px] border-[#4a0a05] pb-[12px]">
               <span className="mr-[20px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] opacity-50">
                 Search
@@ -102,14 +102,14 @@ export default function HeaderActions() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Type to search the collection"
-                className="w-full bg-transparent font-['Questrial'] text-[26px] leading-[31.2px] text-[#4a0a05] outline-none placeholder:text-[#4a0a05] placeholder:opacity-40"
+                  className="w-full bg-transparent font-['Questrial'] text-[26px] leading-[31.2px] text-[#4a0a05] outline-none placeholder:text-[#4a0a05] placeholder:opacity-40 max-sm:text-[20px]"
               />
             </div>
           </div>
 
-          <div className="w-full flex-1 overflow-y-auto px-[72px] pt-[40px]">
+          <div className="w-full flex-1 overflow-y-auto px-[72px] pt-[40px] max-sm:px-4 max-sm:pt-[24px]">
             {results.length > 0 ? (
-              <div className="grid w-full max-w-[1392px] grid-cols-3 gap-[12px]">
+              <div className="grid w-full max-w-[1392px] grid-cols-3 gap-[12px] max-sm:grid-cols-2 max-sm:gap-[16px]">
                 {results.map((p) => (
                   <Link
                     key={p.name}
@@ -117,7 +117,7 @@ export default function HeaderActions() {
                     onClick={() => setPanel(null)}
                     className="group flex flex-col"
                   >
-                    <div className="relative h-[420px] w-full overflow-clip bg-[#e9e4dc]">
+                    <div className="relative h-[420px] w-full overflow-clip bg-[#e9e4dc] max-sm:h-[55vw]">
                       <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" />
                     </div>
                     <div className="mt-[14px] flex flex-col">
@@ -132,12 +132,12 @@ export default function HeaderActions() {
                 ))}
               </div>
             ) : (
-              <div className="flex w-full max-w-[1392px] items-center justify-between border-t-[0.8px] border-[#4a0a05] pt-[16px]">
+              <div className="flex w-full max-w-[1392px] items-center justify-between border-t-[0.8px] border-[#4a0a05] pt-[16px] max-sm:flex-col max-sm:items-start max-sm:gap-[16px]">
                 <span className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
                   {query.trim() ? "No results found." : "Popular searches"}
                 </span>
                 {!query.trim() && (
-                  <div className="flex gap-[24px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
+                  <div className="flex gap-[24px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] max-sm:flex-wrap max-sm:gap-x-[16px] max-sm:gap-y-[8px]">
                     <Link href="/shop" onClick={() => setPanel(null)} className="cursor-pointer hover:opacity-60">Chandeliers</Link>
                     <Link href="/shop" onClick={() => setPanel(null)} className="cursor-pointer hover:opacity-60">Pendants</Link>
                     <Link href="/shop" onClick={() => setPanel(null)} className="cursor-pointer hover:opacity-60">Table Lamps</Link>
@@ -157,7 +157,7 @@ export default function HeaderActions() {
             className="fixed inset-0 z-40 bg-[#4a0a05] opacity-20"
             onClick={() => setPanel(null)}
           />
-          <div className="fixed right-0 top-0 z-50 flex h-full w-[430px] flex-col border-l-[0.8px] border-[#4a0a05] bg-[#fafaf9]">
+          <div className="fixed right-0 top-0 z-50 flex h-full w-[430px] flex-col border-l-[0.8px] border-[#4a0a05] bg-[#fafaf9] max-sm:w-full">
             <div className="flex items-center justify-between border-b-[0.8px] border-[#4a0a05] py-[18px] pl-[20px] pr-[12px]">
               <span className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
                 Cart ({count})
@@ -276,4 +276,3 @@ export default function HeaderActions() {
     </div>
   );
 }
-

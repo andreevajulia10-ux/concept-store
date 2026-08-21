@@ -79,7 +79,6 @@ export default function Collection() {
   };
 
   // Порог движения, считающий жест «кликом», а не перетаскиванием.
-  const DRAG_SLOP = 6;
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     // Не начинаем перетаскивание, если нажатие пришлось на ссылку/кнопку.
@@ -125,18 +124,18 @@ export default function Collection() {
   return (
     <section
       id="collection"
-      className="relative mx-auto flex w-full max-w-[1536px] flex-col px-[72px]"
+      className="relative mx-auto flex w-full max-w-[1536px] flex-col px-[72px] max-sm:px-4"
     >
-      <div className="flex gap-[12px]">
+      <div className="flex gap-[12px] max-sm:flex-col">
         {/* Левая колонка: заголовок */}
-        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="flex w-[261px] shrink-0 flex-col items-start border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
           <p className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16px] text-[#4a0a05]">
             The Collection
           </p>
         </div>
 
         {/* Правая колонка */}
-        <div className="relative flex w-[1119px] flex-col border-t-[0.8px] border-[#4a0a05] pt-[12px]">
+        <div className="relative flex w-[1119px] flex-col border-t-[0.8px] border-[#4a0a05] pt-[12px] max-sm:w-full">
           <p className="max-w-[345px] font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">
             Since our founding in 2018, our
             <br />
@@ -152,14 +151,14 @@ export default function Collection() {
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
-            className="-mx-[72px] mt-[12px] flex w-[calc(100%+144px)] cursor-grab gap-[12px] overflow-x-auto overflow-y-visible px-[72px] pb-6 active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="-mx-[72px] mt-[12px] flex w-[calc(100%+144px)] cursor-grab gap-[12px] overflow-x-auto overflow-y-visible px-[72px] pb-6 active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-sm:mx-0 max-sm:w-full max-sm:gap-[16px] max-sm:px-0"
           >
             {categories.map((c) => (
               <article
                 key={c.title}
-                className="flex w-[261px] shrink-0 flex-col items-start gap-[6px]"
+                className="flex w-[261px] shrink-0 flex-col items-start gap-[6px] max-sm:w-[46vw]"
               >
-                <div className="h-[324px] w-[261px] overflow-clip bg-[#f8f7f1]">
+                <div className="h-[324px] w-[261px] overflow-clip bg-[#f8f7f1] max-sm:h-[56vw] max-sm:w-full">
                   <Image
                     src={c.image}
                     alt={c.title}

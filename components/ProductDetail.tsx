@@ -4,8 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MorrowLogo from "./MorrowLogo";
+import HeaderActions from "./HeaderActions";
 import Arrow from "./Arrow";
 import Footer from "./Footer";
+import { useCart } from "@/components/cart-context";
 import type { Product } from "@/lib/products";
 
 type DropdownProps = {
@@ -17,7 +19,7 @@ type DropdownProps = {
 function FieldDropdown({ value, options, onChange }: DropdownProps) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="relative w-[437px]">
+    <div className="relative w-[437px] max-sm:w-full">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -52,8 +54,8 @@ function FieldDropdown({ value, options, onChange }: DropdownProps) {
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-center border-b-[0.8px] border-[#4a0a05] opacity-90">
-      <div className="flex w-[259px] shrink-0 items-center">
+    <div className="flex items-center border-b-[0.8px] border-[#4a0a05] opacity-90 max-sm:flex-col max-sm:items-start max-sm:py-[4px]">
+      <div className="flex w-[259px] shrink-0 items-center max-sm:w-full max-sm:py-[4px]">
         <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{label}</span>
       </div>
       {children}
@@ -63,21 +65,17 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 
 function PageHeader() {
   return (
-    <div className="flex h-[60px] w-full items-center justify-between px-[72px] font-['Questrial'] text-[16px] leading-[20px] text-[#4a0a05]">
+    <div className="flex h-[60px] w-full items-center justify-between px-[72px] font-['Questrial'] text-[16px] leading-[20px] text-[#4a0a05] max-sm:px-4">
       <Link href="/">
         <MorrowLogo className="shrink-0" />
       </Link>
-      <nav className="flex items-center gap-[56px] whitespace-nowrap">
-        <span className="cursor-pointer">Shop</span>
-        <Link href="/" className="cursor-pointer">Collections</Link>
-        <span className="cursor-pointer">Objects</span>
-        <span className="cursor-pointer">About</span>
+      <nav className="flex items-center gap-[56px] whitespace-nowrap max-sm:hidden">
+        <Link href="/shop" className="cursor-pointer">Shop</Link>
+        <Link href="/#collections" className="cursor-pointer hover:opacity-60">Collections</Link>
+        <Link href="/#collection" className="cursor-pointer hover:opacity-60">Objects</Link>
+        <Link href="/#visit" className="cursor-pointer hover:opacity-60">About</Link>
       </nav>
-      <nav className="flex items-center gap-[20px] whitespace-nowrap">
-        <span className="cursor-pointer">Search</span>
-        <span className="cursor-pointer">Journal</span>
-        <span className="cursor-pointer">Cart (0)</span>
-      </nav>
+      <HeaderActions />
     </div>
   );
 }
@@ -110,9 +108,9 @@ function FinishGrid({
         <span className="font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{title}</span>
         <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{note}</span>
       </div>
-      <div className="grid w-full grid-cols-5 gap-[12px]">
+      <div className="grid w-full grid-cols-5 gap-[12px] max-sm:grid-cols-2 max-sm:gap-[16px]">
         {items.map((f) => (
-          <div key={f.label} className="relative h-[159.5px] overflow-clip bg-[#e9e4dc]">
+          <div key={f.label} className="relative h-[159.5px] overflow-clip bg-[#e9e4dc] max-sm:h-[30vw]">
             <Image src={f.image} alt={f.label} fill className="object-cover" />
             <span className="absolute left-[8px] top-[8px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{f.label}</span>
           </div>
@@ -137,8 +135,8 @@ function GalleryFigure({
   g: { figure: string; image: string; caption: string; w: number; h: number };
 }) {
   return (
-    <div className="flex flex-col" style={{ width: g.w }}>
-      <div className="relative overflow-clip" style={{ height: g.h }}>
+    <div className="flex flex-col max-sm:!w-full" style={{ width: g.w }}>
+      <div className="relative overflow-clip max-sm:!h-[70vw]" style={{ height: g.h }}>
         <Image src={g.image} alt={g.figure} fill className="object-cover" />
         <span className="absolute inset-0 m-auto flex items-center justify-center">
           <ViewGallery />
@@ -155,16 +153,33 @@ export default function ProductDetail({ product }: { product: Product }) {
   const [shade, setShade] = useState(product.defaultShade);
   const [size, setSize] = useState(product.defaultSize);
   const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
+
+  const handleAddToCart = () => {
+    addItem({
+      slug: product.slug,
+      name: product.name,
+      image: product.heroImage,
+      price: product.price,
+      finish,
+      shade,
+      size,
+      qty,
+    });
+    setAdded(true);
+    window.setTimeout(() => setAdded(false), 2000);
+  };
 
   return (
     <div className="mx-auto flex w-full flex-col bg-[#fafaf9]">
       <PageHeader />
 
       {/* ===== HERO товара ===== */}
-      <section className="mx-auto flex w-[1392px] gap-[12px]">
-        <div className="flex w-[696px] flex-col pb-[28px] pt-[92px]">
+      <section className="mx-auto flex w-[1392px] gap-[12px] max-sm:w-full max-sm:flex-col max-sm:gap-0 max-sm:px-4">
+        <div className="flex w-[696px] flex-col pb-[28px] pt-[92px] max-sm:w-full max-sm:pt-[40px]">
           <div>
-            <h1 className="whitespace-nowrap font-['Questrial'] text-[26px] leading-[31.2px] text-[#4a0a05]">
+            <h1 className="whitespace-nowrap font-['Questrial'] text-[26px] leading-[31.2px] text-[#4a0a05] max-sm:whitespace-normal">
               {product.name}
             </h1>
             <p className="mr-[40px] mt-[30px] border-t-[0.8px] border-[#4a0a05] pt-[10px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
@@ -182,14 +197,14 @@ export default function ProductDetail({ product }: { product: Product }) {
                 <FieldDropdown value={size} options={product.sizeOptions} onChange={setSize} />
               </Row>
               <Row label="Lead time">
-                <div className="flex h-[31px] w-[437px] items-center px-[8px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] opacity-50">
+                <div className="flex h-[31px] w-[437px] items-center px-[8px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] opacity-50 max-sm:w-full">
                   {product.leadLabel}
                 </div>
               </Row>
 
-              <div className="mt-[14px] flex items-start gap-[8px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
-                <span className="w-[258px] whitespace-nowrap">Item Number: {product.itemNumber}</span>
-                <span className="w-[430px]">
+              <div className="mt-[14px] flex items-start gap-[8px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] max-sm:flex-col">
+                <span className="w-[258px] whitespace-nowrap max-sm:w-full">Item Number: {product.itemNumber}</span>
+                <span className="w-[430px] max-sm:w-full">
                   Lead Time: {product.leadTime}
                   <br />
                   {product.estShipDate}
@@ -197,8 +212,8 @@ export default function ProductDetail({ product }: { product: Product }) {
               </div>
             </form>
 
-            <div className="mt-[26px] flex items-center">
-              <div className="flex h-[32px] w-[265px] items-center justify-between border-y-[0.8px] border-l-[0.8px] border-[#4a0a05] px-[16px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
+            <div className="mt-[26px] flex items-center max-sm:flex-col max-sm:items-stretch max-sm:gap-[12px]">
+              <div className="flex h-[32px] w-[265px] items-center justify-between border-y-[0.8px] border-l-[0.8px] border-[#4a0a05] px-[16px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] max-sm:w-full max-sm:border-r-[0.8px]">
                 <div className="flex items-center">
                   <button type="button" aria-label="Уменьшить количество" onClick={() => setQty((q) => (q > 1 ? q - 1 : 1))} className="cursor-pointer hover:opacity-60">
                     −
@@ -212,24 +227,27 @@ export default function ProductDetail({ product }: { product: Product }) {
               </div>
               <button
                 type="button"
-                className="flex h-[32px] w-[431px] cursor-pointer items-center justify-between border-[0.8px] border-[#4a0a05] px-[16px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] hover:opacity-70"
+                onClick={handleAddToCart}
+                className="flex h-[32px] w-[431px] cursor-pointer items-center justify-between border-[0.8px] border-[#4a0a05] px-[16px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] hover:opacity-70 max-sm:w-full"
               >
-                <span className="whitespace-nowrap">{product.price}</span>
-                <span className="whitespace-nowrap opacity-50">Add to Cart</span>
+                <span className="whitespace-nowrap">{added ? "Added to Cart ✓" : product.price}</span>
+                <span className={`whitespace-nowrap ${added ? "" : "opacity-50"}`}>
+                  {added ? "View Cart" : "Add to Cart"}
+                </span>
               </button>
             </div>
           </div>
         </div>
 
-        <div className="relative h-[700px] w-[675px] shrink-0 self-end overflow-clip">
+        <div className="relative h-[700px] w-[675px] shrink-0 self-end overflow-clip max-sm:h-[120vw] max-sm:w-full">
           <Image src={product.heroImage} alt={product.name} fill className="object-cover" />
         </div>
       </section>
 
       {/* ===== Контент: nav + основной ===== */}
-      <section className="mx-auto flex w-[1392px] gap-[6px] pt-[64px]">
-        <aside className="relative w-[267px] shrink-0">
-          <div className="sticky top-0 flex w-[261px] flex-col gap-[17px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
+      <section className="mx-auto flex w-[1392px] gap-[6px] pt-[64px] max-sm:w-full max-sm:flex-col max-sm:px-4">
+        <aside className="relative w-[267px] shrink-0 max-sm:order-2 max-sm:w-full max-sm:pt-[40px]">
+          <div className="sticky top-0 flex w-[261px] flex-col gap-[17px] font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] max-sm:static max-sm:w-full">
             <div className="flex items-center gap-[14px]">
               <span className="inline-block size-[8px] rounded-full bg-[#4a0a05]" />
               <span>Overview</span>
@@ -242,7 +260,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
         </aside>
 
-        <div className="flex w-[1121px] flex-col gap-[20px]">
+        <div className="flex w-[1121px] flex-col gap-[20px] max-sm:order-1 max-sm:w-full">
           <div className="flex flex-col gap-[4px]">
             <SmallLink label="Add Sidemark" />
             <SmallLink label="Inquire About This Item" />
@@ -252,33 +270,33 @@ export default function ProductDetail({ product }: { product: Product }) {
           {/* Описание */}
           <div className="flex flex-col gap-[60px] pt-[60px]">
             <div className="border-t-[0.8px] border-[#4a0a05] pt-[14px]">
-              <p className="w-[870px] whitespace-pre font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">
+              <p className="w-[870px] whitespace-pre-wrap font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05] max-sm:w-full">
                 {product.leadParagraph}
                 {product.bodyParagraph ? `\n\n${product.bodyParagraph}` : ""}
               </p>
             </div>
 
-            <div className="flex gap-[12px]">
+            <div className="flex gap-[12px] max-sm:flex-col">
               <GalleryFigure g={product.gallery[0]} />
               <GalleryFigure g={product.gallery[1]} />
             </div>
           </div>
 
           {/* Tech Specs + Downloads */}
-          <div className="flex gap-[12px] pt-[60px]">
-            <div className="flex w-[783px] flex-col gap-[60px] border-t-[0.8px] border-[#4a0a05] pt-[10px]">
+          <div className="flex gap-[12px] pt-[60px] max-sm:flex-col">
+            <div className="flex w-[783px] flex-col gap-[60px] border-t-[0.8px] border-[#4a0a05] pt-[10px] max-sm:w-full">
               <h2 className="font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">Tech Specs</h2>
               <div className="flex flex-col">
                 {product.techSpecs.map((spec) => (
-                  <div key={spec.label} className="flex items-start gap-[2px] border-t-[0.8px] border-[#bcb6a6] py-[8px] last:border-b-[0.8px]">
-                    <span className="w-[261px] shrink-0 font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{spec.label}</span>
-                    <span className="whitespace-pre font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{spec.value}</span>
+                  <div key={spec.label} className="flex items-start gap-[2px] border-t-[0.8px] border-[#bcb6a6] py-[8px] last:border-b-[0.8px] max-sm:flex-col max-sm:gap-[4px]">
+                    <span className="w-[261px] shrink-0 font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05] max-sm:w-full">{spec.label}</span>
+                    <span className="whitespace-pre-wrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{spec.value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="flex w-[326px] flex-col gap-[60px] border-t-[0.8px] border-[#4a0a05] pt-[10px]">
+            <div className="flex w-[326px] flex-col gap-[60px] border-t-[0.8px] border-[#4a0a05] pt-[10px] max-sm:w-full">
               <h2 className="font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">Downloads</h2>
               <div className="flex flex-col">
                 {product.downloads.map((label) => (
@@ -297,9 +315,9 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
 
           {/* Баннер */}
-          <div className="relative mt-[120px] h-[853px] w-full overflow-clip">
+          <div className="relative mt-[120px] h-[853px] w-full overflow-clip max-sm:mt-[60px] max-sm:h-[120vw]">
             <Image src={product.bannerImage} alt="Explore the collection" fill className="object-cover" />
-            <div className="absolute inset-x-0 top-0 flex items-start justify-between px-[72px] pb-[24px] pt-[44px]">
+            <div className="absolute inset-x-0 top-0 flex items-start justify-between px-[72px] pb-[24px] pt-[44px] max-sm:flex-col max-sm:gap-[20px] max-sm:px-4 max-sm:pt-[24px]">
               <p className="max-w-[696px] font-['Questrial'] text-[17px] leading-[20.4px] text-[#f8f7f1]">{product.bannerText}</p>
               <Link href="/" className="flex shrink-0 items-center gap-[14px] whitespace-nowrap font-['Questrial'] text-[18px] leading-[21.6px] text-[#f8f7f1] hover:opacity-70">
                 <svg viewBox="0 0 19 11" width="22" height="13" className="-scale-x-100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,7 +331,7 @@ export default function ProductDetail({ product }: { product: Product }) {
       </section>
 
       {/* ===== Finish Samples ===== */}
-      <section className="mx-auto flex w-[1121px] flex-col gap-[60px] pt-[80px]">
+      <section className="mx-auto flex w-[1121px] flex-col gap-[60px] pt-[80px] max-sm:w-full max-sm:gap-[40px] max-sm:px-4">
         <div className="flex items-center border-t-[0.8px] border-[#4a0a05] pt-[10px]">
           <h2 className="font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">Finish Samples</h2>
         </div>
@@ -322,13 +340,13 @@ export default function ProductDetail({ product }: { product: Product }) {
       </section>
 
       {/* ===== Bulbs + Spare Parts ===== */}
-      <section className="mx-auto flex w-[1121px] flex-col gap-[60px] pt-[80px]">
+      <section className="mx-auto flex w-[1121px] flex-col gap-[60px] pt-[80px] max-sm:w-full max-sm:gap-[40px] max-sm:px-4">
         <div className="flex items-center border-t-[0.8px] border-[#4a0a05] pt-[10px]">
           <h2 className="font-['Questrial'] text-[18px] leading-[21.6px] text-[#4a0a05]">Bulbs + Spare Parts</h2>
         </div>
 
         <div className="flex flex-col gap-[32px]">
-          <div className="flex items-start justify-between border-t-[0.8px] border-[#c5b2b0] pt-[10px]">
+          <div className="flex items-start justify-between gap-[16px] border-t-[0.8px] border-[#c5b2b0] pt-[10px]">
             <span className="w-[194px] whitespace-pre font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">
               {product.replacementName}{"\n"}{product.replacementDesc}
             </span>
@@ -340,7 +358,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
 
         <div className="flex flex-col gap-[32px]">
-          <div className="flex items-start justify-between border-t-[0.8px] border-[#c5b2b0] pt-[10px]">
+          <div className="flex items-start justify-between gap-[16px] border-t-[0.8px] border-[#c5b2b0] pt-[10px]">
             <span className="w-[194px] whitespace-pre font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{product.bulbName}</span>
             <span className="whitespace-nowrap font-['Questrial'] text-[14px] leading-[16.8px] text-[#4a0a05]">{product.bulbPrice}</span>
           </div>
@@ -352,8 +370,8 @@ export default function ProductDetail({ product }: { product: Product }) {
       </section>
 
       {/* ===== Gallery ===== */}
-      <section className="mx-auto flex w-[1121px] flex-col gap-[60px] pt-[90px]">
-        <div className="flex flex-wrap gap-[12px]">
+      <section className="mx-auto flex w-[1121px] flex-col gap-[60px] pt-[90px] max-sm:w-full max-sm:gap-[40px] max-sm:px-4">
+        <div className="flex flex-wrap gap-[12px] max-sm:flex-col">
           {product.gallery.map((g) => (
             <GalleryFigure key={g.figure} g={g} />
           ))}
@@ -361,7 +379,7 @@ export default function ProductDetail({ product }: { product: Product }) {
       </section>
 
       {/* ===== Footer ===== */}
-      <div className="mt-[120px]">
+      <div className="mt-[120px] max-sm:mt-[72px]">
         <Footer />
       </div>
     </div>
